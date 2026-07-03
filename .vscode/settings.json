@@ -1,7 +1,8 @@
 {
-	"C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-	 "clangd.arguments": [
-    "--compile-commands-dir=${workspaceFolder}/build/Debug"
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+  "clangd.arguments": [
+    "--compile-commands-dir=${workspaceFolder}/build/Debug",
+    "--header-insertion=never"
   ],
   "cortex-debug.variableUseNaturalFormat": true
 }

@@ -2,40 +2,37 @@
 
 // 72 MHz
 void rcc_init(void) {
-  FLASH->ACR |= FLASH_ACR_LATENCY_2;
+    FLASH->ACR |= FLASH_ACR_LATENCY_2;
 
-  RCC->CFGR &= ~RCC_CFGR_SW;
-  while (RCC->CFGR & RCC_CFGR_SWS)
-    ;
+    RCC->CR |= RCC_CR_HSION;
+    while (!(RCC->CR & RCC_CR_HSIRDY));
 
-  RCC->CR &= ~RCC_CR_HSEON;
-  while (RCC->CR & RCC_CR_HSERDY)
-    ;
+    RCC->CFGR &= ~RCC_CFGR_SW;
+    while (RCC->CFGR & RCC_CFGR_SWS);
 
-  RCC->CR &= ~RCC_CR_PLLON;
-  while (RCC->CR & RCC_CR_PLLRDY)
-    ;
+    RCC->CR &= ~RCC_CR_HSEON;
+    while (RCC->CR & RCC_CR_HSERDY);
 
-  RCC->CFGR &= ~RCC_CFGR_PLLMULL;
-  RCC->CFGR |= RCC_CFGR_PLLMULL9;
+    RCC->CR &= ~RCC_CR_PLLON;
+    while (RCC->CR & RCC_CR_PLLRDY);
 
-  RCC->CFGR &= ~RCC_CFGR_PLLXTPRE;
-  RCC->CFGR |= RCC_CFGR_PLLSRC;
-  RCC->CFGR |= RCC_CFGR_HPRE_DIV1;
-  RCC->CFGR &= ~RCC_CFGR_PPRE1;
-  RCC->CFGR |= RCC_CFGR_PPRE1_2;
+    RCC->CFGR &= ~RCC_CFGR_PLLMULL;
+    RCC->CFGR |= RCC_CFGR_PLLMULL9;
 
-  RCC->CR |= RCC_CR_HSEON;
-  while (!(RCC->CR & RCC_CR_HSERDY))
-    ;
+    RCC->CFGR &= ~RCC_CFGR_PLLXTPRE;
+    RCC->CFGR |= RCC_CFGR_PLLSRC;
+    RCC->CFGR |= RCC_CFGR_HPRE_DIV1;
+    RCC->CFGR &= ~RCC_CFGR_PPRE1;
+    RCC->CFGR |= RCC_CFGR_PPRE1_2;
 
-  RCC->CR |= RCC_CR_PLLON;
-  while (!(RCC->CR & RCC_CR_PLLRDY))
-    ;
+    RCC->CR |= RCC_CR_HSEON;
+    while (!(RCC->CR & RCC_CR_HSERDY));
 
-  RCC->CFGR |= RCC_CFGR_SW_PLL;
-  while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL)
-    ;
+    RCC->CR |= RCC_CR_PLLON;
+    while (!(RCC->CR & RCC_CR_PLLRDY));
 
-  RCC->CR &= ~RCC_CR_HSION;
+    RCC->CFGR |= RCC_CFGR_SW_PLL;
+    while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL);
+
+    RCC->CR &= ~RCC_CR_HSION;
 }

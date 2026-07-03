@@ -5,5 +5,5 @@ set(CPU_PARAMETERS ${CPU_PARAMETERS}
 )
 
 set(compiler_define ${compiler_define}
-    "STM32F103xB"
+    "STM32F103xG"
 )
